@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<title>Pollinate NextStep</title>
+<style>
+:root{
+  --bg:#f0f4ff;
+  --card:#ffffff;
+  --text:#1a1a2e;
+  --muted:#6b7280;
+  --line:#d1d5db;
+  --accent:#2563eb;
+  --accent2:#1d4ed8;
+  --green:#15803d;
+  --green-bg:#f0fdf4;
+  --green-border:#86efac;
+  --amber:#92400e;
+  --amber-bg:#fffbeb;
+  --red:#991b1b;
+  --red-bg:#fef2f2;
+  --bar-h:72px;
+  --radius:20px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+body{
+  margin:0;
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  font-size:17px;
+  line-height:1.5;
+  overflow-x:hidden;
+}
+.app{
+  max-width:560px;
+  margin:0 auto;
+  padding:16px 14px calc(var(--bar-h) + 24px);
+}
+
+/* ── PROGRESS BAR ── */
+.progress-bar{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:4px;
+  margin:0 0 18px;
+}
+.pb-step{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:4px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+}
+.pb-dot{
+  width:32px;height:32px;
+  border-radius:50%;
+  background:#e2e8f0;
+  color:#94a3b8;
+  font-weight:800;
+  font-size:15px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,color .2s;
+}
+.pb-step.done .pb-dot{background:#bfdbfe;color:#1e3a8a;}
+.pb-step.active .pb-dot{background:var(--accent);color:#fff;box-shadow:0 0 0 4px #bfdbfe;}
+.pb-label{
+  font-size:10px;
+  font-weight:600;
+  color:#94a3b8;
+  text-align:center;
+  line-height:1.2;
+}
+.pb-step.active .pb-label{color:var(--accent);}
+.pb-step.done .pb-label{color:#1e3a8a;}
+
+/* ── CARDS ── */
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:0 4px 20px rgba(37,99,235,.08);
+  padding:20px 18px;
+  margin:0 0 14px;
+}
+.screen{display:none;}
+.screen.active{display:block;}
+
+/* ── HEADER ── */
+.screen-title{
+  font-size:1.45rem;
+  font-weight:800;
+  margin:0 0 4px;
+  color:var(--text);
+}
+.screen-sub{
+  color:var(--muted);
+  margin:0 0 18px;
+  font-size:.95rem;
+}
+.what-next{
+  background:#eff6ff;
+  border-left:4px solid var(--accent);
+  border-radius:10px;
+  padding:12px 14px;
+  font-size:.95rem;
+  font-weight:600;
+  color:#1e3a8a;
+  margin-bottom:18px;
+}
+
+/* ── FORM ELEMENTS ── */
+label{
+  display:block;
+  font-weight:700;
+  margin:14px 0 6px;
+  font-size:.97rem;
+}
+label .hint{
+  font-weight:400;
+  font-size:.87rem;
+  color:var(--muted);
+  display:block;
+  margin-top:2px;
+}
+input[type="text"],select,textarea{
+  width:100%;
+  padding:14px 15px;
+  border:2px solid var(--line);
+  border-radius:14px;
+  font-size:1rem;
+  background:#fff;
+  color:var(--text);
+  -webkit-appearance:none;
+  appearance:none;
+  transition:border-color .15s;
+}
+input[type="text"]:focus,select:focus,textarea:focus{
+  outline:none;
+  border-color:var(--accent);
+}
+textarea{min-height:120px;resize:vertical;}
+select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:38px;}
+
+/* ── CHIP BUTTONS ── */
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px;}
+.chip{position:relative;}
+.chip input{position:absolute;opacity:0;pointer-events:none;}
+.chip span{
+  display:inline-block;
+  padding:11px 18px;
+  border-radius:999px;
+  border:2px solid var(--line);
+  background:#fff;
+  font-size:.97rem;
+  font-weight:600;
+  user-select:none;
+  cursor:pointer;
+  transition:background .15s,border-color .15s,color .15s;
+}
+.chip input:checked + span{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+
+/* ── QUESTION BLOCK ── */
+.question{
+  border:2px solid #e5e7eb;
+  border-radius:16px;
+  padding:14px;
+  margin:12px 0;
+  background:#fff;
+}
+.question-title{
+  font-weight:700;
+  font-size:.97rem;
+  margin-bottom:10px;
+  line-height:1.45;
+}
+
+/* ── CHECKPOINT ROW ── */
+.checkpoint-row{
+  border:2px solid #e5e7eb;
+  border-radius:16px;
+  padding:14px;
+  margin:12px 0;
+  background:#fafbff;
+}
+.checkpoint-num{
+  display:inline-block;
+  background:var(--accent);
+  color:#fff;
+  border-radius:8px;
+  padding:2px 10px;
+  font-weight:800;
+  font-size:.87rem;
+  margin-bottom:10px;
+}
+
+/* ── HINTS ── */
+.hint-box{
+  background:#f8fafc;
+  border:1px solid #e2e8f0;
+  border-radius:14px;
+  padding:12px 14px;
+  margin:10px 0;
+  font-size:.9rem;
+  color:#334155;
+  line-height:1.6;
+}
+.hint-box strong{color:var(--text);}
+
+/* ── STATUS MESSAGES ── */
+.msg{
+  border-radius:14px;
+  padding:14px;
+  margin:14px 0;
+  font-size:.95rem;
+  display:none;
+}
+.msg.info{background:#eff6ff;color:#1e3a8a;border:1px solid #bfdbfe;}
+.msg.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border);}
+.msg.warn{background:var(--amber-bg);color:var(--amber);border:1px solid #fcd34d;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:#e5e7eb;margin:18px 0;}
+
+/* ── BIG ACTION BUTTON ── */
+.export-cta{
+  background:linear-gradient(135deg,#1d4ed8,#2563eb);
+  color:#fff;
+  width:100%;
+  padding:20px;
+  border-radius:16px;
+  font-size:1.2rem;
+  font-weight:800;
+  text-align:center;
+  border:none;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(37,99,235,.35);
+  letter-spacing:.01em;
+  margin:6px 0;
+}
+.export-cta:active{transform:scale(.98);}
+
+/* ── INLINE BUTTONS ── */
+.btn{
+  border:none;
+  border-radius:14px;
+  padding:14px 20px;
+  font-size:1rem;
+  font-weight:700;
+  cursor:pointer;
+  line-height:1;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  transition:background .15s,transform .1s;
+}
+.btn:active{transform:scale(.97);}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:var(--accent2);}
+.btn-secondary{background:#eef2ff;color:#1e3a8a;}
+.btn-ghost{background:#fff;color:var(--text);border:2px solid var(--line);}
+.btn-green{background:#16a34a;color:#fff;}
+.btn-sm{padding:10px 16px;font-size:.93rem;}
+.btn-full{width:100%;}
+
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px;}
+.btnrow .btn{flex:1;min-width:130px;}
+
+/* ── EXPORT INSTRUCTIONS ── */
+.export-steps{
+  background:#f0fdf4;
+  border:2px solid var(--green-border);
+  border-radius:16px;
+  padding:16px 18px;
+  margin:14px 0;
+}
+.export-steps .es-title{
+  font-weight:800;
+  font-size:1rem;
+  color:var(--green);
+  margin-bottom:10px;
+}
+.export-steps ol{
+  margin:0;padding-left:20px;
+  color:#166534;
+  font-weight:600;
+  font-size:.97rem;
+  line-height:2;
+}
+
+/* ── FINAL DECISION ── */
+.decision{
+  border-radius:16px;
+  padding:16px;
+  margin:16px 0;
+  text-align:center;
+  font-size:1.1rem;
+  font-weight:800;
+}
+.decision.pass{background:var(--green-bg);color:var(--green);border:2px solid var(--green-border);}
+.decision.adjust{background:var(--amber-bg);color:var(--amber);border:2px solid #fcd34d;}
+
+/* ── STICKY BOTTOM NAV ── */
+.bottom-nav{
+  position:fixed;
+  bottom:0;left:0;right:0;
+  background:rgba(255,255,255,.97);
+  backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
+  border-top:1px solid #e5e7eb;
+  padding:10px 14px max(10px,env(safe-area-inset-bottom));
+  display:grid;
+  grid-template-columns:1fr 1.6fr 1fr;
+  gap:8px;
+  z-index:100;
+  max-width:560px;
+  margin:0 auto;
+  left:50%;
+  transform:translateX(-50%);
+  width:100%;
+}
+.nav-btn{
+  border:none;
+  border-radius:12px;
+  padding:13px 10px;
+  font-size:.92rem;
+  font-weight:700;
+  cursor:pointer;
+  text-align:center;
+  line-height:1.2;
+}
+.nav-btn:active{transform:scale(.95);}
+.nav-back{background:#f1f5f9;color:#475569;}
+.nav-next{background:var(--accent);color:#fff;font-size:1rem;}
+.nav-export{background:#16a34a;color:#fff;font-size:.82rem;}
+.nav-btn:disabled{opacity:.35;pointer-events:none;}
+
+/* ── SETUP SCREEN GRID ── */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+@media(max-width:400px){.two-col{grid-template-columns:1fr;}}
+
+/* ── MISC ── */
+.small{font-size:.88rem;color:var(--muted);}
+.bold{font-weight:700;}
+.mt-8{margin-top:8px;}
+.mt-16{margin-top:16px;}
+strong{font-weight:800;}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- PROGRESS DOTS -->
+  <div class="progress-bar" id="progressBar">
+    <div class="pb-step active" data-step="setup">
+      <div class="pb-dot">1</div>
+      <div class="pb-label">Setup</div>
+    </div>
+    <div class="pb-step" data-step="baseline">
+      <div class="pb-dot">2</div>
+      <div class="pb-label">Baseline</div>
+    </div>
+    <div class="pb-step" data-step="daily">
+      <div class="pb-dot">3</div>
+      <div class="pb-label">Daily Log</div>
+    </div>
+    <div class="pb-step" data-step="final">
+      <div class="pb-dot">4</div>
+      <div class="pb-label">Review</div>
+    </div>
+    <div class="pb-step" data-step="export">
+      <div class="pb-dot">5</div>
+      <div class="pb-label">Export</div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ STEP 1: SETUP ═══════════════════════════════ -->
+  <div id="setup" class="screen active">
+    <div class="what-next">👋 Welcome! Start here. Fill in the info below, then tap <strong>Next</strong>.</div>
+    <div class="card">
+      <div class="screen-title">1. Setup</div>
+      <div class="screen-sub">Basic info about your child and today's session.</div>
+
+      <label>Child's Name</label>
+      <input id="childName" type="text" value="Jameson" autocomplete="off"/>
+
+      <label>Child's Age Group</label>
+      <input id="childAge" type="text" value="18–24 months" autocomplete="off"/>
+
+      <label>Your Name</label>
+      <div class="chips" id="caregiverChips">
+        <label class="chip">
+          <input type="radio" name="caregiverChoice" value="Mom">
+          <span>Mom</span>
+        </label>
+        <label class="chip">
+          <input type="radio" name="caregiverChoice" value="Dad">
+          <span>Dad</span>
+        </label>
+      </div>
+      <input id="caregiver" type="hidden" value=""/>
+
+      <input id="sessionDate" type="hidden"/>
+      <input id="sessionTime" type="hidden"/>
+
+      <label>Session Length</label>
+      <select id="duration">
+        <option>5–10 minutes</option>
+        <option selected>10–15 minutes</option>
+        <option>15–20 minutes</option>
+        <option>20–30 minutes</option>
+      </select>
+
+      <div id="setupMsg" class="msg info"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ STEP 2: BASELINE ═══════════════════════════════ -->
+  <div id="baseline" class="screen">
+    <div class="what-next">📋 Answer each question about your child. Tap the best answer for each one. Then tap <strong>Next</strong>.</div>
+    <div class="card">
+      <div class="screen-title">2. Baseline</div>
+      <div class="screen-sub">Answer based on what your child does most of the time — not their best or worst day.</div>
+      <div id="baselineQs"></div>
+      <div id="branchWrap"></div>
+      <div id="baselineMsg" class="msg info"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ STEP 3: DAILY LOG ═══════════════════════════════ -->
+  <div id="daily" class="screen">
+    <div class="what-next">📝 Log what you tried today. Fill in 3–5 checkpoints, then tap <strong>Next</strong>.</div>
+    <div class="card">
+      <div class="screen-title">3. Daily Log</div>
+      <div class="screen-sub">Pick a milestone area and record what you tried with your child today.</div>
+
+      <label>Today's Focus Area</label>
+      <select id="dailyMilestone1" onchange="renderHints()">
+        <option>M1: Follows Instructions</option>
+        <option>M2: Communication</option>
+        <option>M3: Movement</option>
+        <option>M4: Problem Solving</option>
+      </select>
+
+      <div class="hint-box" id="hintBox"></div>
+
+      <div class="divider"></div>
+
+      <div style="font-weight:800;font-size:1.05rem;margin-bottom:4px;">Log your checkpoints below</div>
+      <div class="small" style="margin-bottom:14px;">Fill in at least 3. Each one only takes a few seconds.</div>
+
+      <div id="checkpointRows"></div>
+
+      <div class="divider"></div>
+
+      <label>How did it go overall?
+        <span class="hint">A sentence or two is enough.</span>
+      </label>
+      <textarea id="dayReflection" placeholder="Example: He responded to his name a lot better today. Felt easier than yesterday."></textarea>
+
+      <label>How hard was it for you?</label>
+      <select id="parentExperience">
+        <option value="">— Pick one —</option>
+        <option>Easy</option>
+        <option>Medium</option>
+        <option>Hard</option>
+      </select>
+
+      <label>How engaged was your child?</label>
+      <select id="childEngagement">
+        <option value="">— Pick one —</option>
+        <option>High</option>
+        <option>Medium</option>
+        <option>Low</option>
+      </select>
+
+      <label>Anything confusing or awkward?
+        <span class="hint">Optional</span>
+      </label>
+      <input type="text" id="friction" placeholder="E.g. he wasn't in the mood, felt repetitive"/>
+
+      <div id="dailyMsg" class="msg info"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ STEP 4: FINAL REVIEW ═══════════════════════════════ -->
+  <div id="final" class="screen">
+    <div class="what-next">✅ Almost done! Answer these final questions after your last session, then tap <strong>Next</strong>.</div>
+    <div class="card">
+      <div class="screen-title">4. Final Review</div>
+      <div class="screen-sub">Quick, honest answers. Do what feels true — not what sounds good.</div>
+
+      <div id="finalQs"></div>
+
+      <div class="divider"></div>
+
+      <label>Open reflection
+        <span class="hint">Answer any or all of these</span>
+      </label>
+      <textarea id="finalReflection" placeholder="Which checkpoints felt pointless?&#10;&#10;Which ones worked well?&#10;&#10;Anything else you noticed?"></textarea>
+
+      <div id="finalDecision" class="decision" style="display:none;"></div>
+      <div id="finalMsg" class="msg info"></div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ STEP 5: EXPORT ═══════════════════════════════ -->
+  <div id="export" class="screen">
+    <div class="what-next">📤 You're done! Export your file and send it to Tom.</div>
+    <div class="card">
+      <div class="screen-title">5. Export File</div>
+      <div class="screen-sub">This saves everything — setup, baseline, daily logs, and review — into one file.</div>
+
+      <label>Any extra feedback for Tom?
+        <span class="hint">Optional — what felt clear or confusing?</span>
+      </label>
+      <textarea id="extraFeedback" placeholder="Anything else Tom should know…"></textarea>
+
+      <div style="margin-top:18px;">
+        <button class="export-cta" id="exportBtn">👉 EXPORT FILE</button>
+      </div>
+
+      <div id="exportMsg" class="msg ok" style="display:none;">
+        ✅ File downloaded!<br><br>
+        You can now text, email, or upload this file.
+      </div>
+
+      <div class="export-steps" id="exportInstructions" style="display:none;">
+        <div class="es-title">📂 Next step:</div>
+        <ol>
+          <li>Open your <strong>Downloads</strong> folder</li>
+          <li>Find the <strong>pollinate_…txt</strong> file</li>
+          <li>Text or email it to Tom</li>
+          <li>— OR — upload it into <strong>ChatGPT</strong></li>
+        </ol>
+      </div>
+
+      <div class="divider"></div>
+
+      <div style="font-weight:700;margin-bottom:10px;">Other options</div>
+      <div class="btnrow">
+        <button class="btn btn-secondary" id="copySummaryBtn">📋 Copy Summary</button>
+        <button class="btn btn-ghost" id="saveLocalBtn">💾 Save Progress</button>
+        <button class="btn btn-ghost" id="loadLocalBtn">📂 Load Saved</button>
+      </div>
+      <div id="exportStatus" class="msg info"></div>
+    </div>
+  </div>
+
+</div><!-- /app -->
+
+<!-- STICKY BOTTOM NAV -->
+<div class="bottom-nav" id="bottomNav">
+  <button class="nav-btn nav-back" id="navBack" disabled>← Back</button>
+  <button class="nav-btn nav-next" id="navNext">Next →</button>
+  <button class="nav-btn nav-export" id="navExport">⬇ Export</button>
+</div>
+
+<script>
+/* ═══════════════ DATA ═══════════════ */
+const STEPS = ['setup','baseline','daily','final','export'];
+let currentStep = 0;
+
+const baselineQuestions = [
+  ["Q1","Does your child say at least 5–10 words (for example: mama, ball, more)?"],
+  ["Q2","Does your child try to copy words you say?"],
+  ["Q3","Does your child point to things they want or find interesting?"],
+  ["Q4","Does your child understand simple words like no, bye, or eat?"],
+  ["Q5","Does your child respond when you call their name?"],
+  ["Q6","Can your child follow a simple instruction (for example: come here, give it to me)?"],
+  ["Q7","Does your child stop or pause when told no, even briefly?"],
+  ["Q8","Is your child walking on their own without help?"],
+  ["Q9","Does your child squat down and stand back up without falling?"],
+  ["Q10","Does your child try to climb onto furniture such as a couch or chair?"]
+];
+
+const branchingQuestions = [
+  ["B1","Does your child make sounds or babble frequently (even if not clear words)?","Q1"],
+  ["B2","Does your child respond to gestures (e.g., reaching arms up to be picked up)?","Q6"],
+  ["B3","Does your child crawl or move around to explore?","Q8"]
+];
+
+const chipOptions = ["Yes","Sometimes","Not yet"];
+
+const milestones = [
+  "M1: Follows Instructions",
+  "M2: Communication",
+  "M3: Movement",
+  "M4: Problem Solving"
+];
+
+const checkpointHints = {
+  "M1: Follows Instructions": [
+    "Say your child's name and say Come here.",
+    "Hold out your hand and say Give it to me.",
+    "Point to an object and say Bring me the ball.",
+    "Say Stop and pause your body.",
+    "Give a simple 2-step instruction."
+  ],
+  "M2: Communication": [
+    "Hold up an object and say its name, then pause.",
+    "Say a word and pause to see if they copy.",
+    "Offer a simple choice like Ball or cup.",
+    "Point at something and label it together.",
+    "Repeat your child's sound and add one word."
+  ],
+  "M3: Movement": [
+    "Put a toy on the floor and encourage walking to it.",
+    "Encourage climbing onto a low surface with supervision.",
+    "Put a toy just out of reach and wait.",
+    "Prompt squatting by placing a toy low down.",
+    "Walk together slowly across the room."
+  ],
+  "M4: Problem Solving": [
+    "Hide a toy inside a container and see if they get it out.",
+    "Use a simple shape-fitting toy.",
+    "Hide an object under a cup and see if they look for it.",
+    "Use a push or pull activation toy.",
+    "Place a toy slightly behind something to see if they go around."
+  ]
+};
+
+const finalQuestions = [
+  "Did I use this every day?",
+  "Did it feel simple to start?",
+  "Did I hesitate or avoid using it at any point?",
+  "Did I feel more confident as a parent?",
+  "Would I continue using this without being told to?",
+  "Did this feel like something I'd realistically keep doing long-term?"
+];
+
+/* ═══════════════ HELPERS ═══════════════ */
+function nowDate(){
+  const d=new Date();
+  return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}/${d.getFullYear()}`;
+}
+function nowTime(){
+  const d=new Date();
+  let h=d.getHours();
+  const m=String(d.getMinutes()).padStart(2,'0');
+  const ap=h>=12?'PM':'AM';
+  h=h%12||12;
+  return `${String(h).padStart(2,'0')}:${m} ${ap}`;
+}
+function safeName(t){
+  return (t||"output").replace(/[^a-z0-9_\- ]/gi,"_").trim().replace(/\s+/g,"_");
+}
+function timestampCompact(){
+  const d=new Date();
+  return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}_${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}${String(d.getSeconds()).padStart(2,'0')}`;
+}
+function gv(id){const el=document.getElementById(id);return el?el.value.trim():'';}
+function sv(id,v){const el=document.getElementById(id);if(el)el.value=v;}
+function rv(name){const c=document.querySelector(`input[name="${name}"]:checked`);return c?c.value:'';}
+function syncCaregiver(){
+  const selected = rv('caregiverChoice');
+  const el = document.getElementById('caregiver');
+  if(el) el.value = selected || '';
+}
+function showMsg(id,text,type='info'){
+  const el=document.getElementById(id);
+  if(!el)return;
+  el.className=`msg ${type}`;
+  el.innerHTML=text;
+  el.style.display='block';
+}
+function hideMsg(id){
+  const el=document.getElementById(id);
+  if(el)el.style.display='none';
+}
+
+function sectionHeader(title){
+  return [
+    '='.repeat(55),
+    title,
+    '='.repeat(55),
+    `Child: ${gv('childName')}`,
+    `Age Group: ${gv('childAge')}`,
+    `Parent/Caregiver: ${gv('caregiver')}`,
+    `Date: ${gv('sessionDate')}`,
+    `Time: ${gv('sessionTime')}`,
+    `Duration: ${gv('duration')}`,
+    `Generated: ${new Date().toLocaleString()}`,
+    '',
+    '-'.repeat(55),
+    ''
+  ].join('\n');
+}
+
+/* ═══════════════ RENDER BASELINE ═══════════════ */
+function renderBaseline(){
+  const bq=document.getElementById('baselineQs');
+  let html='';
+  baselineQuestions.forEach(([id,q])=>{
+    html+=questionBlock(id,q,'baseline');
+  });
+  bq.innerHTML=html;
+
+  const brw=document.getElementById('branchWrap');
+  let bhtml='';
+  branchingQuestions.forEach(([id,q])=>{
+    bhtml+=`<div id="wrap_${id}" style="display:none;">${questionBlock(id,q,'branch')}</div>`;
+  });
+  brw.innerHTML=bhtml;
+
+  document.querySelectorAll('input[name^="baseline_"]').forEach(x=>{
+    x.addEventListener('change',updateBranchVisibility);
+  });
+  updateBranchVisibility();
+}
+
+function questionBlock(id,q,prefix){
+  return `<div class="question">
+    <div class="question-title">${id}. ${q}</div>
+    <div class="chips">
+      ${chipOptions.map(opt=>`
+        <label class="chip">
+          <input type="radio" name="${prefix}_${id}" value="${opt}">
+          <span>${opt}</span>
+        </label>`).join('')}
+    </div>
+  </div>`;
+}
+
+function updateBranchVisibility(){
+  branchingQuestions.forEach(([bid,,trigger])=>{
+    const wrap=document.getElementById(`wrap_${bid}`);
+    if(wrap) wrap.style.display=(rv(`baseline_${trigger}`)==='Not yet')?'block':'none';
+  });
+}
+
+/* ═══════════════ RENDER DAILY ═══════════════ */
+function renderCheckpoints(){
+  const container=document.getElementById('checkpointRows');
+  let html='';
+  for(let i=1;i<=5;i++){
+    html+=`
+    <div class="checkpoint-row">
+      <div class="checkpoint-num">Checkpoint ${i}</div>
+      <label>What did you try?
+        <span class="hint">Be brief — one sentence is fine.</span>
+      </label>
+      <input type="text" id="rowCheckpoint_${i}" placeholder="E.g. Said name + come here"/>
+      <label style="margin-top:12px;">How did your child respond?</label>
+      <div class="chips">
+        ${chipOptions.map(opt=>`
+          <label class="chip">
+            <input type="radio" name="rowResponse_${i}" value="${opt}">
+            <span>${opt}</span>
+          </label>`).join('')}
+      </div>
+      <label style="margin-top:10px;">Quick note
+        <span class="hint">Optional</span>
+      </label>
+      <input type="text" id="rowNote_${i}" placeholder="Anything worth noting?"/>
+    </div>`;
+  }
+  container.innerHTML=html;
+}
+
+function renderHints(){
+  const m=gv('dailyMilestone1');
+  const hints=checkpointHints[m]||[];
+  const box=document.getElementById('hintBox');
+  if(!box)return;
+  if(!hints.length){box.innerHTML='';return;}
+  box.innerHTML=`<strong>Ideas for ${m}:</strong><br>${hints.map(h=>`• ${h}`).join('<br>')}`;
+}
+
+/* ═══════════════ RENDER FINAL ═══════════════ */
+function renderFinal(){
+  const container=document.getElementById('finalQs');
+  let html='';
+  finalQuestions.forEach((q,idx)=>{
+    const n=idx+1;
+    html+=`<div class="question">
+      <div class="question-title">Q${n}. ${q}</div>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="final_${n}" value="Yes" onchange="checkFinalDecision()"><span>Yes</span></label>
+        <label class="chip"><input type="radio" name="final_${n}" value="No" onchange="checkFinalDecision()"><span>No</span></label>
+      </div>
+    </div>`;
+  });
+  container.innerHTML=html;
+}
+
+function checkFinalDecision(){
+  const q5=rv('final_5');
+  const q6=rv('final_6');
+  const el=document.getElementById('finalDecision');
+  if(!q5||!q6){el.style.display='none';return;}
+  const passes=(q5==='Yes'&&q6==='Yes');
+  el.className='decision '+(passes?'pass':'adjust');
+  el.innerHTML=passes
+    ? '✅ System passes — you would keep using this!'
+    : '⚠️ System needs adjustment — something needs to change.';
+  el.style.display='block';
+}
+
+/* ═══════════════ EXPORT / SAVE ═══════════════ */
+function buildFullExport(){
+  let text='';
+
+  // Header
+  text+=sectionHeader('Pollinate NextStep — Full Export');
+
+  // Setup
+  text+='SECTION 1: SETUP\n\n';
+  text+=`Child Name: ${gv('childName')}\n`;
+  text+=`Age Group: ${gv('childAge')}\n`;
+  text+=`Parent/Caregiver: ${gv('caregiver')}\n`;
+  text+=`Date: ${gv('sessionDate')}\n`;
+  text+=`Time: ${gv('sessionTime')}\n`;
+  text+=`Duration: ${gv('duration')}\n\n`;
+
+  // Baseline
+  text+='-'.repeat(55)+'\nSECTION 2: BASELINE ASSESSMENT\n\n';
+  text+='CORE QUESTIONS\n\n';
+  baselineQuestions.forEach(([id,q])=>{
+    text+=`${id}. ${q}\nAnswer: ${rv(`baseline_${id}`)||'Not answered'}\n\n`;
+  });
+  text+='BRANCHING QUESTIONS\n\n';
+  let anyBranch=false;
+  branchingQuestions.forEach(([id,q,trigger])=>{
+    if(rv(`baseline_${trigger}`)==='Not yet'){
+      anyBranch=true;
+      text+=`${id}. ${q}\nAnswer: ${rv(`branch_${id}`)||'Not answered'}\n\n`;
+    }
+  });
+  if(!anyBranch) text+='None triggered.\n\n';
+
+  // Daily Log
+  text+='-'.repeat(55)+'\nSECTION 3: DAILY LOG\n\n';
+  text+=`Focus Area: ${gv('dailyMilestone1')}\n\n`;
+  text+='CHECKPOINTS\n\n';
+  let hasCheckpoint=false;
+  for(let i=1;i<=5;i++){
+    const chk=gv(`rowCheckpoint_${i}`);
+    const res=rv(`rowResponse_${i}`);
+    const note=gv(`rowNote_${i}`);
+    if(chk||res){
+      hasCheckpoint=true;
+      text+=`Checkpoint ${i}\n`;
+      text+=`  What tried: ${chk||'—'}\n`;
+      text+=`  Response: ${res||'—'}\n`;
+      text+=`  Note: ${note||'None'}\n\n`;
+    }
+  }
+  if(!hasCheckpoint) text+='No checkpoints logged.\n\n';
+  text+=`Parent Experience: ${gv('parentExperience')||'Not provided'}\n`;
+  text+=`Child Engagement: ${gv('childEngagement')||'Not provided'}\n`;
+  text+=`Friction: ${gv('friction')||'None provided'}\n\n`;
+  text+=`Overall Reflection:\n${document.getElementById('dayReflection')?document.getElementById('dayReflection').value.trim():'Not provided'}\n\n`;
+
+  // Final Review
+  text+='-'.repeat(55)+'\nSECTION 4: FINAL REVIEW\n\n';
+  finalQuestions.forEach((q,idx)=>{
+    const n=idx+1;
+    text+=`Q${n}. ${q}\nAnswer: ${rv(`final_${n}`)||'Not answered'}\n\n`;
+  });
+  const q5=rv('final_5'), q6=rv('final_6');
+  const passes=(q5==='Yes'&&q6==='Yes');
+  text+=`FINAL DECISION: ${(q5&&q6)?(passes?'System passes':'System needs adjustment'):'Not determined'}\n\n`;
+  text+=`Open Reflection:\n${document.getElementById('finalReflection')?document.getElementById('finalReflection').value.trim():'Not provided'}\n\n`;
+
+  // Extra Feedback
+  text+='-'.repeat(55)+'\nSECTION 5: EXTRA FEEDBACK\n\n';
+  text+=gv('extraFeedback')||'None provided.';
+  text+='\n\n'+'='.repeat(55)+'\nEND OF EXPORT\n'+'='.repeat(55);
+  return text;
+}
+
+function doExport(){
+  const text=buildFullExport();
+  const child=safeName(gv('childName')||'child');
+  const fname=`pollinate_${child}_${timestampCompact()}.txt`;
+  const blob=new Blob([text],{type:'text/plain;charset=utf-8'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download=fname;
+  document.body.appendChild(a);a.click();a.remove();
+  URL.revokeObjectURL(url);
+
+  showMsg('exportMsg','✅ File downloaded! You can now text, email, or upload this file.','ok');
+  document.getElementById('exportMsg').style.display='block';
+  document.getElementById('exportInstructions').style.display='block';
+}
+
+function copySummary(){
+  const text=buildFullExport();
+  navigator.clipboard.writeText(text).then(()=>{
+    showMsg('exportStatus','📋 Full summary copied to clipboard.','info');
+  }).catch(()=>{
+    showMsg('exportStatus','Could not copy — try the Export File button instead.','info');
+  });
+}
+
+function saveLocal(){
+  const data={};
+  document.querySelectorAll('input[type="text"],textarea,select').forEach(el=>{
+    if(el.id)data[el.id]=el.value;
+  });
+  document.querySelectorAll('input[type="radio"]:checked').forEach(el=>{
+    data[`radio_${el.name}`]=el.value;
+  });
+  data['_step']=currentStep;
+  localStorage.setItem('pollinate_v2',JSON.stringify(data));
+  showMsg('exportStatus','💾 Progress saved on this device.','info');
+}
+
+function loadLocal(){
+  const raw=localStorage.getItem('pollinate_v2');
+  if(!raw){showMsg('exportStatus','No saved progress found.','info');return;}
+  const data=JSON.parse(raw);
+  Object.entries(data).forEach(([k,v])=>{
+    if(k==='_step') return;
+    if(k.startsWith('radio_')){
+      const name=k.replace('radio_','');
+      const inp=document.querySelector(`input[name="${name}"][value="${v}"]`);
+      if(inp)inp.checked=true;
+    } else {
+      const el=document.getElementById(k);
+      if(el)el.value=v;
+    }
+  });
+  updateBranchVisibility();
+  renderHints();
+  syncCaregiver();
+  checkFinalDecision();
+  if(data._step!==undefined) goToStep(data._step);
+  showMsg('exportStatus','📂 Saved progress loaded.','info');
+}
+
+/* ═══════════════ NAVIGATION ═══════════════ */
+function goToStep(idx){
+  if(idx<0||idx>=STEPS.length) return;
+  currentStep=idx;
+  // Show/hide screens
+  STEPS.forEach((s,i)=>{
+    document.getElementById(s).classList.toggle('active',i===idx);
+  });
+  // Progress bar
+  document.querySelectorAll('.pb-step').forEach((el,i)=>{
+    el.classList.remove('active','done');
+    if(i===idx) el.classList.add('active');
+    else if(i<idx) el.classList.add('done');
+  });
+  // Nav buttons
+  document.getElementById('navBack').disabled=(idx===0);
+  document.getElementById('navNext').innerHTML=idx===STEPS.length-1?'✓ Done':'Next →';
+  // Render hints when arriving at daily
+  if(STEPS[idx]==='daily') renderHints();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function nextStep(){
+  if(currentStep<STEPS.length-1) goToStep(currentStep+1);
+}
+function prevStep(){
+  if(currentStep>0) goToStep(currentStep-1);
+}
+
+/* ═══════════════ DATE/TIME ═══════════════ */
+function fillDateTime(){
+  const dateVal = nowDate();
+  const timeVal = nowTime();
+  const dateEl = document.getElementById('sessionDate');
+  const timeEl = document.getElementById('sessionTime');
+  if(dateEl) dateEl.value = dateVal;
+  if(timeEl) timeEl.value = timeVal;
+  sv('sessionDate', dateVal);
+  sv('sessionTime', timeVal);
+}
+
+/* ═══════════════ INIT ═══════════════ */
+function init(){
+  fillDateTime();
+  setTimeout(fillDateTime, 300);
+
+  renderBaseline();
+  renderCheckpoints();
+  renderFinal();
+  renderHints();
+
+  document.querySelectorAll('input[name="caregiverChoice"]').forEach((el)=>{
+    el.addEventListener('change', syncCaregiver);
+  });
+  syncCaregiver();
+  showMsg('setupMsg', 'Setup loaded. Date/time initialized in the background.', 'info');
+
+  // Progress bar clicks
+  document.querySelectorAll('.pb-step').forEach((el,i)=>{
+    el.addEventListener('click',()=>goToStep(i));
+  });
+
+  // Bottom nav
+  document.getElementById('navBack').addEventListener('click',prevStep);
+  document.getElementById('navNext').addEventListener('click',nextStep);
+  document.getElementById('navExport').addEventListener('click',()=>{
+    goToStep(STEPS.indexOf('export'));
+    setTimeout(doExport,200);
+  });
+
+  // Export screen
+  document.getElementById('exportBtn').addEventListener('click',doExport);
+  document.getElementById('copySummaryBtn').addEventListener('click',copySummary);
+  document.getElementById('saveLocalBtn').addEventListener('click',saveLocal);
+  document.getElementById('loadLocalBtn').addEventListener('click',loadLocal);
+}
+
+document.addEventListener("DOMContentLoaded", init);
+</script>
+</body>
+</html>
