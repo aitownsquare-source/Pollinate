@@ -968,22 +968,26 @@ function prevStep(){
   if(currentStep>0) goToStep(currentStep-1);
 }
 
-/* ═══════════════ INIT ═══════════════ */
-function init(){
-  sv('sessionDate',nowDate());
-  sv('sessionTime',nowTime());
-
-  function fillDateTime(showNotice){
+/* ═══════════════ DATE/TIME ═══════════════ */
+function fillDateTime(showNotice){
   const dateEl = document.getElementById('sessionDate');
   const timeEl = document.getElementById('sessionTime');
-  if (dateEl) dateEl.value = nowDate();
-  if (timeEl) timeEl.value = nowTime();
+  const dateVal = nowDate();
+  const timeVal = nowTime();
+  if (dateEl) dateEl.value = dateVal;
+  if (timeEl) timeEl.value = timeVal;
+  sv('sessionDate', dateVal);
+  sv('sessionTime', timeVal);
   if (showNotice) {
-    showMsg('setupMsg', 'Date/time refreshed: ' + gv('sessionDate') + ' ' + gv('sessionTime'), 'info');
+    showMsg('setupMsg', 'Date/time refreshed: ' + dateVal + ' ' + timeVal, 'info');
   }
 }
 
-document.getElementById('refreshDateTime').addEventListener('click', function(){ fillDateTime(true); });
+/* ═══════════════ INIT ═══════════════ */
+function init(){
+  fillDateTime(false);
+
+  document.getElementById('refreshDateTime').addEventListener('click', function(){ fillDateTime(true); });
 
   renderBaseline();
   renderCheckpoints();
