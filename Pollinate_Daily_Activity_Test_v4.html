@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover"/>
+<title>Pollinate Daily Activity Test</title>
+<style>
+:root{--bg:#f0f4ff;--card:#ffffff;--text:#1a1a2e;--muted:#6b7280;--line:#d1d5db;--accent:#2563eb;--green:#15803d;--green-bg:#f0fdf4;--green-border:#86efac;--amber:#92400e;--amber-bg:#fffbeb;--amber-border:#fcd34d;--radius:20px;--bar-h:90px}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--text);font-size:17px;line-height:1.5;overflow-x:hidden}.app{max-width:560px;margin:0 auto;padding:16px 14px calc(var(--bar-h) + 24px)}.progress-bar{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin:0 0 18px}.pb-step{display:flex;flex-direction:column;align-items:center;gap:4px}.pb-dot{width:32px;height:32px;border-radius:50%;background:#e2e8f0;color:#94a3b8;font-weight:800;font-size:15px;display:flex;align-items:center;justify-content:center}.pb-step.done .pb-dot{background:#bfdbfe;color:#1e3a8a}.pb-step.active .pb-dot{background:var(--accent);color:#fff;box-shadow:0 0 0 4px #bfdbfe}.pb-label{font-size:10px;font-weight:600;color:#94a3b8;text-align:center;line-height:1.2}.pb-step.active .pb-label{color:var(--accent)}.pb-step.done .pb-label{color:#1e3a8a}.card{background:var(--card);border-radius:var(--radius);box-shadow:0 4px 20px rgba(37,99,235,.08);padding:20px 18px;margin:0 0 14px}.screen{display:none}.screen.active{display:block}.screen-title{font-size:1.45rem;font-weight:800;margin:0 0 4px}.screen-sub{color:var(--muted);margin:0 0 18px;font-size:.95rem}.what-next{background:#eff6ff;border-left:4px solid var(--accent);border-radius:10px;padding:12px 14px;font-size:.95rem;font-weight:600;color:#1e3a8a;margin-bottom:18px}label{display:block;font-weight:700;margin:14px 0 6px;font-size:.97rem}label .hint{font-weight:400;font-size:.87rem;color:var(--muted);display:block;margin-top:2px}input[type="text"],select,textarea{width:100%;padding:14px 15px;border:2px solid var(--line);border-radius:14px;font-size:1rem;background:#fff;color:var(--text);-webkit-appearance:none;appearance:none}input[type="text"]:focus,select:focus,textarea:focus{outline:none;border-color:var(--accent)}textarea{min-height:110px;resize:vertical}select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;padding-right:38px}.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:6px}.chip{position:relative}.chip input{position:absolute;opacity:0;pointer-events:none}.chip span{display:inline-block;padding:11px 18px;border-radius:999px;border:2px solid var(--line);background:#fff;font-size:.97rem;font-weight:600;user-select:none;cursor:pointer;-webkit-user-select:none}.chip input:checked + span{background:var(--accent);color:#fff;border-color:var(--accent)}.msg{border-radius:14px;padding:14px;margin:14px 0;font-size:.95rem;display:none}.msg.info{background:#eff6ff;color:#1e3a8a;border:1px solid #bfdbfe}.msg.ok{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}.msg.warn{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}.hint-box,.summary-list,.activity-card{background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:12px 14px;margin:10px 0 14px;font-size:.92rem;color:#334155;line-height:1.6}.summary-list div{margin:6px 0}.divider{height:1px;background:#e5e7eb;margin:18px 0}.log-card{border:2px solid #e5e7eb;border-radius:16px;padding:14px;margin:12px 0;background:#fafbff}.log-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:10px}.log-num{display:inline-block;background:var(--accent);color:#fff;border-radius:8px;padding:2px 10px;font-weight:800;font-size:.87rem}.log-remove{border:none;background:#fff;border:2px solid #e5e7eb;color:#475569;border-radius:10px;padding:8px 12px;font-weight:700;cursor:pointer}.btn{border:none;border-radius:14px;padding:14px 20px;font-size:1rem;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:6px;-webkit-appearance:none;touch-action:manipulation}.btn-secondary{background:#eef2ff;color:#1e3a8a}.btn-ghost{background:#fff;color:var(--text);border:2px solid var(--line)}.btnrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:18px}.btnrow .btn{flex:1;min-width:130px}.btn-full{width:100%}.export-cta{background:linear-gradient(135deg,#1d4ed8,#2563eb);color:#fff;width:100%;padding:20px;border-radius:16px;font-size:1.2rem;font-weight:800;text-align:center;border:none;cursor:pointer;box-shadow:0 6px 20px rgba(37,99,235,.35);margin:6px 0;-webkit-appearance:none;touch-action:manipulation}.export-steps{background:#f0fdf4;border:2px solid var(--green-border);border-radius:16px;padding:16px 18px;margin:14px 0}.export-steps .es-title{font-weight:800;font-size:1rem;color:var(--green);margin-bottom:10px}.export-steps ol{margin:0;padding-left:20px;color:#166534;font-weight:600;font-size:.97rem;line-height:2}.decision{border-radius:16px;padding:16px;margin:16px 0;text-align:center;font-size:1.05rem;font-weight:800}.decision.pass{background:var(--green-bg);color:var(--green);border:2px solid var(--green-border)}.decision.adjust{background:var(--amber-bg);color:var(--amber);border:2px solid var(--amber-border)}.bottom-nav{position:fixed;bottom:0;left:0;right:0;background:rgba(255,255,255,.97);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);border-top:1px solid #e5e7eb;padding:10px 14px;padding-bottom:max(14px,env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1.6fr 1fr;gap:8px;z-index:9999;max-width:560px;margin:0 auto;-webkit-transform:translateZ(0);transform:translateZ(0)}.nav-btn{border:none;border-radius:12px;padding:15px 10px;font-size:.92rem;font-weight:700;cursor:pointer;text-align:center;line-height:1.2;-webkit-appearance:none;touch-action:manipulation;min-height:52px}.nav-back{background:#f1f5f9;color:#475569}.nav-next{background:var(--accent);color:#fff;font-size:1rem}.nav-export{background:#16a34a;color:#fff;font-size:.82rem}.nav-save{background:#0f766e;color:#fff;font-size:.92rem}.nav-btn:disabled{opacity:.35;pointer-events:none}.two-col{display:grid;grid-template-columns:1fr 1fr;gap:12px}.activity-card.selected{border:2.5px solid #dc2626;box-shadow:0 0 0 3px rgba(220,38,38,.15)}.small{font-size:.88rem;color:var(--muted)}@media(max-width:430px){.two-col{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="progress-bar" style="grid-template-columns:repeat(5,1fr)">
+    <div class="pb-step active"><div class="pb-dot">★</div><div class="pb-label">Start</div></div>
+    <div class="pb-step"><div class="pb-dot">1</div><div class="pb-label">Setup</div></div>
+    <div class="pb-step"><div class="pb-dot">2</div><div class="pb-label">Activities</div></div>
+    <div class="pb-step"><div class="pb-dot">3</div><div class="pb-label">Review</div></div>
+    <div class="pb-step"><div class="pb-dot">4</div><div class="pb-label">Export</div></div>
+  </div>
+
+  <div id="welcome" class="screen active">
+    <div class="card" style="text-align:center;padding:28px 20px;">
+      <div style="font-size:2.4rem;margin-bottom:10px;">🌱</div>
+      <div class="screen-title" style="font-size:1.6rem;margin-bottom:8px;">Welcome to the Pollinate Activity Test</div>
+      <div style="color:var(--muted);font-size:.97rem;margin-bottom:24px;">Takes about 10–15 minutes spread across 7 days.</div>
+      <div style="text-align:left;background:#f8fafc;border:1px solid #e2e8f0;border-radius:14px;padding:16px 18px;margin-bottom:24px;">
+        <div style="font-weight:800;margin-bottom:12px;font-size:1rem;">Here's how it works:</div>
+        <div style="display:flex;flex-direction:column;gap:12px;font-size:.97rem;color:#334155;">
+          <div>① <strong>Setup</strong> — add your name and your child's info. Just once.</div>
+          <div>② <strong>Pick an activity</strong> — we'll suggest a few short ones based on your child's age.</div>
+          <div>③ <strong>Try it &amp; log it</strong> — takes about 10 seconds after each activity.</div>
+          <div>④ <strong>Repeat on different days</strong> — the test completes after 7 unique days of use.</div>
+          <div>⑤ <strong>Export &amp; send</strong> — send your file to Tom when done.</div>
+        </div>
+      </div>
+      <button class="btn nav-next" style="width:100%;padding:16px;font-size:1.1rem;border-radius:14px;" onclick="nextStep()">Let's Start →</button>
+    </div>
+  </div>
+
+  <div id="setup" class="screen">
+    <div class="what-next">👋 Start here. This test ends after 7 different days of actual use. Parents can do up to 5 very short activities in one day if they want.</div>
+    <div class="card">
+      <div class="screen-title">1. Setup</div>
+      <div class="screen-sub">Add parent and child info once. After that, just open the Activities screen whenever you want to try something.</div>
+      <label>Your Name</label>
+      <input id="parentName" type="text" autocomplete="off" placeholder="Example: Tom"/>
+      <label>Your Role</label>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="parentRole" value="Mom"><span>Mom</span></label>
+        <label class="chip"><input type="radio" name="parentRole" value="Dad"><span>Dad</span></label>
+        <label class="chip"><input type="radio" name="parentRole" value="Other"><span>Other</span></label>
+      </div>
+      <label>How many children are you logging for?</label>
+      <select id="childCount" onchange="renderChildSetup()">
+        <option value="1" selected>1 child</option>
+        <option value="2">2 children</option>
+        <option value="3">3 children</option>
+        <option value="4">4 children</option>
+      </select>
+      <div id="childrenSetupWrap"></div>
+      <div id="setupMsg" class="msg info"></div>
+    </div>
+  </div>
+
+  <div id="daily" class="screen">
+    <div class="what-next">🎯 Pick one of the suggested tiny activities below. Date and time are captured automatically in the background when you save a log.</div>
+    <div class="card">
+      <div class="screen-title">2. Suggested Activities</div>
+      <div class="screen-sub">Only 3–5 are shown at a time to keep this easy. You can refresh suggestions and repeat any activity whenever it works well.</div>
+      <div class="hint-box">
+        <strong>How this test works:</strong><br>
+        • Up to 5 activities in one day is fine.<br>
+        • Repeating the same activity is allowed.<br>
+        • Only unique dates count toward the 7-day total.<br>
+        • Survey and export unlock after the 7th unique day of use.
+      </div>
+      <div id="usageWindowBox" class="summary-list"></div>
+
+      <label>Pick child for suggestions</label>
+      <select id="suggestChild" onchange="renderSuggestedActivities()"></select>
+
+      <div class="btnrow">
+        <button class="btn btn-secondary" type="button" onclick="renderSuggestedActivities(true)">🔄 Refresh Ideas</button>
+        <button class="btn btn-ghost" type="button" onclick="addManualLogCard()">＋ Manual Log</button>
+      </div>
+
+      <div id="suggestedActivitiesWrap"></div>
+      <div class="divider"></div>
+      <div style="font-weight:800;margin-bottom:8px;">Saved Logs</div>
+      <div id="dailyLogWrap"></div>
+      <div id="dailyMsg" class="msg info"></div>
+    </div>
+  </div>
+
+  <div id="final" class="screen">
+    <div class="what-next">✅ Honest answers only. This unlocks after 7 unique days of use have been logged.</div>
+    <div class="card">
+      <div class="screen-title">3. Final Review</div>
+      <div class="screen-sub">Answer this after the 7th unique day of use has been reached.</div>
+      <div id="usageSummaryBox" class="summary-list"></div>
+      <label>Did it feel simple to start?</label>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="final_simple" value="Yes" onchange="checkFinalDecision()"><span>Yes</span></label>
+        <label class="chip"><input type="radio" name="final_simple" value="No" onchange="checkFinalDecision()"><span>No</span></label>
+      </div>
+      <label>Did it feel manageable with your current number of kids?</label>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="final_manageable" value="Yes" onchange="checkFinalDecision()"><span>Yes</span></label>
+        <label class="chip"><input type="radio" name="final_manageable" value="No" onchange="checkFinalDecision()"><span>No</span></label>
+      </div>
+      <label>Would you continue using this without being told to?</label>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="final_continue" value="Yes" onchange="checkFinalDecision()"><span>Yes</span></label>
+        <label class="chip"><input type="radio" name="final_continue" value="No" onchange="checkFinalDecision()"><span>No</span></label>
+      </div>
+      <label>Did this feel like something you would realistically keep doing long-term?</label>
+      <div class="chips">
+        <label class="chip"><input type="radio" name="final_longterm" value="Yes" onchange="checkFinalDecision()"><span>Yes</span></label>
+        <label class="chip"><input type="radio" name="final_longterm" value="No" onchange="checkFinalDecision()"><span>No</span></label>
+      </div>
+      <label>What made this worth using or not worth using?<span class="hint">Optional but helpful</span></label>
+      <textarea id="finalReflection" placeholder="Example: The suggested activities helped. Or: I still wanted less tapping."></textarea>
+      <div id="finalDecision" class="decision" style="display:none;"></div>
+      <div id="finalMsg" class="msg info"></div>
+    </div>
+  </div>
+
+  <div id="export" class="screen">
+    <div class="what-next">📤 Export unlocks after 7 unique days of use.</div>
+    <div class="card">
+      <div class="screen-title">4. Export File</div>
+      <div class="screen-sub">This export saves setup info, children, suggestions used, dates used, timestamps, logs, and final review answers.</div>
+      <div id="exportSummaryBox" class="summary-list"></div>
+      <label>Any extra feedback for Tom?<span class="hint">Optional</span></label>
+      <textarea id="extraFeedback" placeholder="Anything else Tom should know…"></textarea>
+      <div style="margin-top:18px;"><button class="export-cta" id="exportBtn">👉 EXPORT FILE</button></div>
+      <div id="exportMsg" class="msg ok" style="display:none;">✅ File downloaded! You can now text, email, or upload this file.</div>
+      <div class="export-steps" id="exportInstructions" style="display:none;">
+        <div class="es-title">📂 Next step:</div>
+        <ol>
+          <li>Open your <strong>Downloads</strong> folder</li>
+          <li>Find the <strong>pollinate_daily_activity_test_…txt</strong> file</li>
+          <li>Text or email it to Tom</li>
+          <li>— OR — share it directly with <strong>Tom</strong></li>
+        </ol>
+      </div>
+      <div class="divider"></div>
+      <div style="font-weight:700;margin-bottom:10px;">Other options</div>
+      <div class="btnrow">
+        <button class="btn btn-secondary" id="copySummaryBtn">📋 Copy Summary</button>
+        <button class="btn btn-ghost" id="saveLocalBtn">💾 Save Progress</button>
+        <button class="btn btn-ghost" id="loadLocalBtn">📂 Load Saved</button>
+      </div>
+      <div id="exportStatus" class="msg info"></div>
+    </div>
+  </div>
+</div>
+
+<div class="bottom-nav" id="bottomNav">
+  <button class="nav-btn nav-next" id="navNext" onclick="nextStep()">Let's Start →</button>
+</div>
+
+<script>
+const STEPS=['welcome','setup','daily','final','export'];
+let currentStep=0,logCounter=0;
+const ACTIVITIES=[
+{id:'a1',ages:['12-17','18-23'],text:'Ask your child to “come here” and see what they do.'},
+{id:'a2',ages:['12-17','18-23'],text:'Hold out your hand and say “give it to me.”'},
+{id:'a3',ages:['12-17','18-23','24-35'],text:'Ask your child to bring you a toy.'},
+{id:'a4',ages:['12-17','18-23'],text:'Say a simple word like “ball” or “cup” and pause.'},
+{id:'a5',ages:['18-23','24-35'],text:'Offer a choice like “book or ball?” and wait.'},
+{id:'a6',ages:['18-23','24-35','36-47'],text:'Repeat what your child says and add one word.'},
+{id:'a7',ages:['12-17','18-23','24-35'],text:'Point to a picture in a book and name it.'},
+{id:'a8',ages:['12-17','18-23','24-35'],text:'Let your child turn the page during book time.'},
+{id:'a9',ages:['24-35','36-47'],text:'Ask “where is the ___?” while reading or playing.'},
+{id:'a10',ages:['12-17','18-23','24-35'],text:'Roll a ball back and forth together.'},
+{id:'a11',ages:['12-17','18-23','24-35'],text:'Stack 2–3 objects together.'},
+{id:'a12',ages:['18-23','24-35','36-47'],text:'Pretend to feed a toy or stuffed animal.'},
+{id:'a13',ages:['12-17','18-23','24-35'],text:'Say your child’s name and pause to see if they respond.'},
+{id:'a14',ages:['18-23','24-35','36-47'],text:'Say “stop” and pause for a moment.'},
+{id:'a15',ages:['24-35','36-47'],text:'Give a simple 2-step direction and see what happens.'},
+{id:'a16',ages:['12-17','18-23'],text:'Place a toy slightly out of reach and wait.'},
+{id:'a17',ages:['12-17','18-23','24-35'],text:'Encourage your child to climb onto something safe.'},
+{id:'a18',ages:['24-35','36-47'],text:'Ask your child to squat down and stand back up.'},
+{id:'a19',ages:['18-23','24-35','36-47'],text:'Put a toy in a container and see if they get it out.'},
+{id:'a20',ages:['24-35','36-47'],text:'Hide a toy under something and see if they look for it.'}
+];
+function nowObj(){return new Date()}
+function isoDate(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function displayDate(iso){if(!iso)return'—';const p=iso.split('-');return p.length===3?`${p[1]}/${p[2]}/${p[0]}`:iso}
+function displayTs(ts){if(!ts)return'—';const d=new Date(ts);if(isNaN(d))return ts;let h=d.getHours();const m=String(d.getMinutes()).padStart(2,'0');const ap=h>=12?'PM':'AM';h=h%12||12;return `${String(d.getMonth()+1).padStart(2,'0')}/${String(d.getDate()).padStart(2,'0')}/${d.getFullYear()} ${h}:${m} ${ap}`}
+function safeName(t){return (t||"output").replace(/[^a-z0-9_\- ]/gi,"_").trim().replace(/\s+/g,"_")}
+function timestampCompact(){const d=new Date();return `${d.getFullYear()}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}_${String(d.getHours()).padStart(2,'0')}${String(d.getMinutes()).padStart(2,'0')}${String(d.getSeconds()).padStart(2,'0')}`}
+function gv(id){const el=document.getElementById(id);return el?el.value.trim():''}
+function sv(id,v){const el=document.getElementById(id);if(el)el.value=v}
+function rv(name){const c=document.querySelector(`input[name="${name}"]:checked`);return c?c.value:''}
+function showMsg(id,text,type='info'){const el=document.getElementById(id);if(!el)return;el.className=`msg ${type}`;el.innerHTML=text;el.style.display='block'}
+function hideMsg(id){const el=document.getElementById(id);if(el)el.style.display='none'}
+function getChildCount(){const n=parseInt(gv('childCount')||'1',10);return isNaN(n)?1:Math.max(1,Math.min(4,n))}
+function getChildData(){const c=getChildCount(),arr=[];for(let i=1;i<=c;i++)arr.push({index:i,name:gv(`childName_${i}`),age:gv(`childAge_${i}`)});return arr}
+function getChildAgeValueByName(name){const f=getChildData().find(c=>c.name===name);return f?f.age:''}
+function getAgeLabel(v){return {"12-17":"12–17 months","18-23":"18–23 months","24-35":"24–35 months","36-47":"36–47 months"}[v]||''}
+function escapeHtml(str){return String(str||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')}
+function getChildOptionsHtml(selected=''){let html='<option value="">— Pick child —</option>';getChildData().forEach(c=>{const label=c.name?`${c.name}${c.age?' ('+getAgeLabel(c.age)+')':''}`:`Child ${c.index}`;html+=`<option value="${escapeHtml(c.name)}" ${selected===c.name?'selected':''}>${escapeHtml(label)}</option>`});return html}
+function renderChildSetup(){const wrap=document.getElementById('childrenSetupWrap');let html='<div class="divider"></div><div style="font-weight:800;font-size:1.02rem;margin-bottom:8px;">Children</div>';for(let i=1;i<=getChildCount();i++){html+=`<div class="log-card"><div class="log-head"><div class="log-num">Child ${i}</div></div><label>Child Name</label><input id="childName_${i}" type="text" autocomplete="off" placeholder="Example: Jameson"/><label>Age Range</label><select id="childAge_${i}"><option value="">— Pick one —</option><option value="12-17">12–17 months</option><option value="18-23">18–23 months</option><option value="24-35">24–35 months</option><option value="36-47">36–47 months</option></select></div>`}wrap.innerHTML=html;refreshSuggestChildDropdown()}
+function refreshSuggestChildDropdown(selected=''){const sel=document.getElementById('suggestChild');if(!sel)return;sel.innerHTML=getChildOptionsHtml(selected||sel.value||'');renderSuggestedActivities()}
+function getActivitiesForChild(childName){const age=getChildAgeValueByName(childName);return ACTIVITIES.filter(a=>!age||a.ages.includes(age))}
+function shuffled(arr){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function renderSuggestedActivities(forceShuffle=false){const wrap=document.getElementById('suggestedActivitiesWrap');if(!wrap)return;const child=gv('suggestChild');if(!child){wrap.innerHTML='<div class="summary-list">Pick a child to see suggested activities.</div>';return}const pool=getActivitiesForChild(child);let chosen=pool.slice(0,5);if(forceShuffle||!window._lastSuggested||window._lastSuggestedChild!==child){chosen=shuffled(pool).slice(0,Math.min(5,pool.length));window._lastSuggested=chosen.map(x=>x.id);window._lastSuggestedChild=child;window._selectedActivity=null}else{chosen=window._lastSuggested.map(id=>pool.find(x=>x.id===id)).filter(Boolean);if(!chosen.length)chosen=shuffled(pool).slice(0,Math.min(5,pool.length))}wrap.innerHTML=chosen.map(a=>`<div class="activity-card${window._selectedActivity===a.id?' selected':''}" id="actCard_${a.id}"><div><strong>Activity:</strong> ${escapeHtml(a.text)}</div><div class="small">You can repeat this anytime if it works well.</div><button class="btn btn-secondary" type="button" onclick="selectActivity('${a.id}')">Use This Activity</button></div>`).join('')}
+function selectActivity(activityId){window._selectedActivity=activityId;document.querySelectorAll('.activity-card').forEach(el=>el.classList.remove('selected'));const card=document.getElementById('actCard_'+activityId);if(card)card.classList.add('selected');addActivityLogCard(activityId)}
+function collectLogIds(){return Array.from(document.querySelectorAll('.log-card[data-log-entry="1"]')).map(el=>parseInt(el.dataset.logId,10)).filter(n=>!isNaN(n))}
+function collectLogs(){return collectLogIds().map(id=>({id,activityId:gv(`logActivityId_${id}`),activityText:gv(`logActivityText_${id}`),logDate:gv(`logDate_${id}`),logTimestamp:gv(`logTimestamp_${id}`),child:gv(`logChild_${id}`),result:rv(`logResult_${id}`),withoutReminder:rv(`logPrompted_${id}`),timeToLog:gv(`logTime_${id}`),friction:gv(`logFriction_${id}`),note:gv(`logNote_${id}`)}))}
+function getUniqueLoggedDates(){return [...new Set(collectLogs().map(l=>l.logDate).filter(Boolean))].sort()}
+function getFirstUseDate(){const d=getUniqueLoggedDates();return d.length?d[0]:''}
+function isUnlocked(){return getUniqueLoggedDates().length>=7}
+function renderUsageWindowBox(){const box=document.getElementById('usageWindowBox');if(!box)return;const dates=getUniqueLoggedDates();box.innerHTML=`<div><strong>Unique Days Used:</strong> ${dates.length} of 7</div><div><strong>First Day Used:</strong> ${displayDate(getFirstUseDate())}</div><div><strong>Dates Used:</strong> ${dates.length?dates.map(displayDate).join(', '):'None yet'}</div><div><strong>Status:</strong> ${isUnlocked()?'7th day reached — survey and export are now unlocked.':`${7-dates.length} more unique day(s) needed.`}</div>`}
+function renderUsageSummaryBox(){const box=document.getElementById('usageSummaryBox');if(!box)return;const dates=getUniqueLoggedDates();box.innerHTML=`<div><strong>Unique Days Used:</strong> ${dates.length} of 7</div><div><strong>First Day Used:</strong> ${displayDate(getFirstUseDate())}</div><div><strong>Dates Used:</strong> ${dates.length?dates.map(displayDate).join(', '):'None'}</div>`}
+function renderExportSummaryBox(){const box=document.getElementById('exportSummaryBox');if(!box)return;const dates=getUniqueLoggedDates();box.innerHTML=`<div><strong>Unique Days Used:</strong> ${dates.length} of 7</div><div><strong>Dates Used:</strong> ${dates.length?dates.map(displayDate).join(', '):'None'}</div>`}
+function refreshUnlockState(){renderNav();renderUsageWindowBox();renderUsageSummaryBox();renderExportSummaryBox()}
+function buildLogCard(saved){logCounter+=1;const id=logCounter;const now=nowObj();const logDate=saved?.logDate||isoDate(now);const ts=saved?.logTimestamp||now.toISOString();const child=saved?.child||gv('suggestChild')||'';const activityText=saved?.activityText||'';const activityId=saved?.activityId||'';const card=document.createElement('div');card.className='log-card';card.dataset.logEntry='1';card.dataset.logId=id;card.id=`logCard_${id}`;card.innerHTML=`<div class="log-head"><div class="log-num">Log ${id}</div><button class="log-remove" type="button" onclick="removeLogCard(${id})">Remove</button></div><div class="summary-list"><div><strong>Date:</strong> ${displayDate(logDate)}</div><div><strong>Time Saved:</strong> ${displayTs(ts)}</div></div><input id="logDate_${id}" type="hidden" value="${escapeHtml(logDate)}"/><input id="logTimestamp_${id}" type="hidden" value="${escapeHtml(ts)}"/><input id="logActivityId_${id}" type="hidden" value="${escapeHtml(activityId)}"/><input id="logActivityText_${id}" type="hidden" value="${escapeHtml(activityText)}"/><label>Child</label><select id="logChild_${id}">${getChildOptionsHtml(child)}</select><label>Activity tried</label><div class="activity-card">${escapeHtml(activityText||'Manual log (something you chose on your own)')}</div><label>Result</label><div class="chips"><label class="chip"><input type="radio" name="logResult_${id}" value="Completed"><span>Completed</span></label><label class="chip"><input type="radio" name="logResult_${id}" value="Partial"><span>Partial</span></label><label class="chip"><input type="radio" name="logResult_${id}" value="Not completed"><span>Not completed</span></label></div><label>Logged without a reminder?</label><div class="chips"><label class="chip"><input type="radio" name="logPrompted_${id}" value="Yes"><span>Yes</span></label><label class="chip"><input type="radio" name="logPrompted_${id}" value="No"><span>No</span></label></div><div class="two-col"><div><label>Time to log</label><select id="logTime_${id}"><option value="">— Pick one —</option><option>&lt;10 sec</option><option>10–20 sec</option><option>20–40 sec</option><option>40+ sec</option></select></div><div><label>Friction</label><select id="logFriction_${id}"><option value="">— Pick one —</option><option>None</option><option>Slight</option><option>Annoying</option><option>Almost didn’t do it</option></select></div></div><label>Quick note<span class="hint">Optional — keep it short</span></label><input id="logNote_${id}" type="text" autocomplete="off" placeholder="Example: This one worked well today"/>`;document.getElementById('dailyLogWrap').prepend(card);if(saved){document.querySelectorAll(`input[name="logResult_${id}"]`).forEach(r=>{if(r.value===saved.result)r.checked=true});document.querySelectorAll(`input[name="logPrompted_${id}"]`).forEach(r=>{if(r.value===saved.withoutReminder)r.checked=true});sv(`logTime_${id}`,saved.timeToLog||'');sv(`logFriction_${id}`,saved.friction||'');sv(`logNote_${id}`,saved.note||'')}refreshUnlockState()}
+function addActivityLogCard(activityId){const a=ACTIVITIES.find(x=>x.id===activityId);if(!a)return;buildLogCard({activityId:a.id,activityText:a.text,child:gv('suggestChild')||''})}
+function addManualLogCard(){buildLogCard({activityId:'manual',activityText:'Manual log (something you chose on your own)',child:gv('suggestChild')||''})}
+function removeLogCard(id){const el=document.getElementById(`logCard_${id}`);if(el)el.remove();refreshUnlockState()}
+function checkFinalDecision(){const c=rv('final_continue'),l=rv('final_longterm'),el=document.getElementById('finalDecision');if(!c||!l){el.style.display='none';return}const pass=(c==='Yes'&&l==='Yes');el.className='decision '+(pass?'pass':'adjust');el.innerHTML=pass?'✅ System passes — this feels like something you would keep using.':'⚠️ System needs adjustment — something about the workflow still has too much friction.';el.style.display='block'}
+function validateSetup(){if(!gv('parentName')){showMsg('setupMsg','Please add your name before continuing.','warn');return false}for(let i=1;i<=getChildCount();i++){if(!gv(`childName_${i}`)){showMsg('setupMsg',`Please add Child ${i}\'s name before continuing.`,'warn');return false}if(!gv(`childAge_${i}`)){showMsg('setupMsg',`Please pick Child ${i}\'s age range before continuing.`,'warn');return false}}hideMsg('setupMsg');return true}
+function validateDaily(){const logs=collectLogs();if(!logs.length){showMsg('dailyMsg','Save at least one activity log before continuing.','warn');return false}for(const log of logs){if(!log.child){showMsg('dailyMsg',`Log ${log.id}: pick a child.`,'warn');return false}if(!log.result){showMsg('dailyMsg',`Log ${log.id}: pick a result.`,'warn');return false}if(!log.withoutReminder){showMsg('dailyMsg',`Log ${log.id}: answer whether it was logged without a reminder.`,'warn');return false}if(!log.timeToLog){showMsg('dailyMsg',`Log ${log.id}: pick the time to log.`,'warn');return false}if(!log.friction){showMsg('dailyMsg',`Log ${log.id}: pick a friction level.`,'warn');return false}}hideMsg('dailyMsg');return true}
+function validateFinal(){if(!isUnlocked()){showMsg('finalMsg','Final review stays locked until 7 unique days of use have been logged.','warn');return false}for(const n of ['final_simple','final_manageable','final_continue','final_longterm']){if(!rv(n)){showMsg('finalMsg','Please answer all final review questions before continuing.','warn');return false}}hideMsg('finalMsg');return true}
+function canMoveForwardFromCurrentStep(){if(STEPS[currentStep]==='welcome')return true;if(STEPS[currentStep]==='setup')return validateSetup();if(STEPS[currentStep]==='daily')return validateDaily();if(STEPS[currentStep]==='final')return validateFinal();return true}
+function renderNav(){const step=STEPS[currentStep];const nav=document.getElementById('bottomNav');const unlocked=isUnlocked();if(step==='welcome'){nav.style.gridTemplateColumns='1fr';nav.innerHTML=`<button class="nav-btn nav-next" onclick="nextStep()" style="font-size:1.05rem">Let\'s Start →</button>`;return}if(step==='daily'){if(unlocked){nav.style.gridTemplateColumns='1fr 1.4fr 1fr';nav.innerHTML=`<button class="nav-btn nav-back" onclick="prevStep()">← Back</button><button class="nav-btn nav-save" onclick="saveLocal();showMsg(\'dailyMsg\',\'✅ Progress saved!\',\'ok\')">💾 Save</button><button class="nav-btn nav-next" onclick="nextStep()">Continue →</button>`}else{nav.style.gridTemplateColumns='1fr 1.4fr';nav.innerHTML=`<button class="nav-btn nav-back" onclick="prevStep()">← Back</button><button class="nav-btn nav-save" onclick="saveLocal();showMsg(\'dailyMsg\',\'✅ Progress saved!\',\'ok\')">💾 Save</button>`}return}if(step==='export'){nav.style.gridTemplateColumns='1fr 2fr';nav.innerHTML=`<button class="nav-btn nav-back" onclick="prevStep()">← Back</button><span></span>`;return}nav.style.gridTemplateColumns='1fr 1.6fr 1fr';nav.innerHTML=`<button class="nav-btn nav-back" onclick="prevStep()">← Back</button><button class="nav-btn nav-next" onclick="nextStep()">Next →</button><button class="nav-btn nav-export" onclick="exportNav()" ${unlocked?'':'disabled style="opacity:.35;pointer-events:none"'}>⬇ Export</button>`}
+function exportNav(){if(!isUnlocked()){showMsg('dailyMsg','Export unlocks after 7 unique days of use.','warn');return}goToStep(STEPS.indexOf('export'));setTimeout(doExport,200)}
+function goToStep(idx){if(idx<0||idx>=STEPS.length)return;if((STEPS[idx]==='final'||STEPS[idx]==='export')&&!isUnlocked()){showMsg('dailyMsg','Survey and export unlock after 7 unique days of use.','warn');return}currentStep=idx;STEPS.forEach((s,i)=>document.getElementById(s).classList.toggle('active',i===idx));document.querySelectorAll('.pb-step').forEach((el,i)=>{el.classList.remove('active','done');if(i===idx)el.classList.add('active');else if(i<idx)el.classList.add('done')});renderNav();refreshUnlockState();window.scrollTo({top:0,behavior:'smooth'})}
+function nextStep(){if(!canMoveForwardFromCurrentStep())return;if(currentStep<STEPS.length-1)goToStep(currentStep+1)}
+function prevStep(){if(currentStep>0)goToStep(currentStep-1)}
+function buildFullExport(){const dates=getUniqueLoggedDates();const logs=collectLogs().sort((a,b)=>a.logTimestamp.localeCompare(b.logTimestamp));const pass=(rv('final_continue')==='Yes'&&rv('final_longterm')==='Yes');let text=`============================================================\nPollinate Daily Activity Test Export\n============================================================\nParent Name: ${gv('parentName')}\nRole: ${rv('parentRole')||'Not provided'}\nFirst Day Used: ${displayDate(getFirstUseDate())}\nGenerated: ${new Date().toLocaleString()}\n\n------------------------------------------------------------\n\nSECTION 1: SETUP\n\nParent Name: ${gv('parentName')}\nRole: ${rv('parentRole')||'Not provided'}\nChildren Logged For: ${getChildCount()}\nFirst Day Used: ${displayDate(getFirstUseDate())}\n\nCHILDREN\n\n`;getChildData().forEach(c=>{text+=`Child ${c.index}\n  Name: ${c.name||'—'}\n  Age Range: ${getAgeLabel(c.age)||'—'}\n\n`});text+=`------------------------------------------------------------\nSECTION 2: USAGE SUMMARY\n\nUnique Days Used: ${dates.length} of 7\nDates Used: ${dates.length?dates.map(displayDate).join(', '):'None'}\n\n`;text+=`------------------------------------------------------------\nSECTION 3: DAILY LOGS\n\n`;if(!logs.length){text+='No logs added.\n\n'}else{logs.forEach((log,idx)=>{text+=`Log ${idx+1}\n  Log Date: ${displayDate(log.logDate)}\n  Timestamp Saved: ${displayTs(log.logTimestamp)}\n  Child: ${log.child||'—'}\n  Child Age Range: ${getAgeLabel(getChildAgeValueByName(log.child))||'—'}\n  Activity: ${log.activityText||'—'}\n  Result: ${log.result||'—'}\n  Logged Without Reminder: ${log.withoutReminder||'—'}\n  Time To Log: ${log.timeToLog||'—'}\n  Friction: ${log.friction||'—'}\n  Quick Note: ${log.note||'None'}\n\n`})}text+=`------------------------------------------------------------\nSECTION 4: FINAL REVIEW\n\nSimple To Start: ${rv('final_simple')||'Not answered'}\nManageable With Current Number Of Kids: ${rv('final_manageable')||'Not answered'}\nWould Continue Using Without Being Told To: ${rv('final_continue')||'Not answered'}\nRealistically Keep Doing Long-Term: ${rv('final_longterm')||'Not answered'}\n\nFINAL DECISION: ${(rv('final_continue')&&rv('final_longterm'))?(pass?'System passes':'System needs adjustment'):'Not determined'}\n\nFinal Reflection:\n${gv('finalReflection')||'None provided.'}\n\n------------------------------------------------------------\nSECTION 5: EXTRA FEEDBACK\n\n${gv('extraFeedback')||'None provided.'}\n\n============================================================\nEND OF EXPORT\n============================================================`;return text}
+function doExport(){if(!isUnlocked()){showMsg('exportStatus','Export stays locked until 7 unique days of use have been logged.','warn');return}const text=buildFullExport();const fname=`pollinate_daily_activity_test_${safeName(gv('parentName')||'parent')}_${timestampCompact()}.txt`;const blob=new Blob([text],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=fname;document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);showMsg('exportMsg','✅ File downloaded! You can now text, email, or upload this file.','ok');document.getElementById('exportInstructions').style.display='block'}
+function copySummary(){navigator.clipboard.writeText(buildFullExport()).then(()=>showMsg('exportStatus','📋 Full summary copied to clipboard.','info')).catch(()=>showMsg('exportStatus','Could not copy — try the Export File button instead.','warn'))}
+function saveLocal(){const data={};document.querySelectorAll('input[type="text"],textarea,select,input[type="hidden"]').forEach(el=>{if(el.id)data[el.id]=el.value});document.querySelectorAll('input[type="radio"]:checked').forEach(el=>{data[`radio_${el.name}`]=el.value});data._step=currentStep;data._logs=collectLogs();data._lastSuggested=window._lastSuggested||[];data._lastSuggestedChild=window._lastSuggestedChild||'';localStorage.setItem('pollinate_daily_activity_test_v1',JSON.stringify(data));showMsg('exportStatus','💾 Progress saved on this device.','info')}
+function loadLocal(){const raw=localStorage.getItem('pollinate_daily_activity_test_v1');if(!raw){showMsg('exportStatus','No saved progress found.','info');return}const data=JSON.parse(raw);if(data.childCount)sv('childCount',data.childCount);renderChildSetup();Object.entries(data).forEach(([k,v])=>{if(k.startsWith('radio_')||k.startsWith('_'))return;const el=document.getElementById(k);if(el)el.value=v});document.querySelectorAll('input[type="radio"]').forEach(el=>el.checked=false);Object.entries(data).forEach(([k,v])=>{if(k.startsWith('radio_'))document.querySelectorAll(`input[name="${k.replace('radio_','')}"]`).forEach(r=>{if(r.value===v)r.checked=true})});document.getElementById('dailyLogWrap').innerHTML='';logCounter=0;const logs=Array.isArray(data._logs)?data._logs:[];if(logs.length)logs.forEach(log=>buildLogCard(log));window._lastSuggested=data._lastSuggested||[];window._lastSuggestedChild=data._lastSuggestedChild||'';refreshSuggestChildDropdown(gv('suggestChild'));checkFinalDecision();refreshUnlockState();if(typeof data._step==='number')goToStep(data._step);showMsg('exportStatus','📂 Saved progress loaded.','info')}
+function init(){renderChildSetup();renderNav();showMsg('setupMsg','Setup loaded. This test ends after 7 unique days of use. Suggested activities can be repeated anytime.','info');document.getElementById('childCount').addEventListener('change',()=>{renderChildSetup();refreshSuggestChildDropdown();saveLocal()});document.getElementById('childrenSetupWrap').addEventListener('change',()=>{refreshSuggestChildDropdown(gv('suggestChild'));saveLocal()});document.getElementById('childrenSetupWrap').addEventListener('input',()=>{refreshSuggestChildDropdown(gv('suggestChild'));saveLocal()});document.getElementById('parentName').addEventListener('input',saveLocal);document.getElementById('exportBtn').addEventListener('click',doExport);document.getElementById('copySummaryBtn').addEventListener('click',copySummary);document.getElementById('saveLocalBtn').addEventListener('click',saveLocal);document.getElementById('loadLocalBtn').addEventListener('click',loadLocal);// Auto-load saved setup if available
+const raw=localStorage.getItem('pollinate_daily_activity_test_v1');if(raw){try{const data=JSON.parse(raw);if(data.childCount)sv('childCount',data.childCount);renderChildSetup();Object.entries(data).forEach(([k,v])=>{if(k.startsWith('radio_')||k.startsWith('_'))return;const el=document.getElementById(k);if(el)el.value=v});document.querySelectorAll('input[type="radio"]').forEach(el=>el.checked=false);Object.entries(data).forEach(([k,v])=>{if(k.startsWith('radio_'))document.querySelectorAll(`input[name="${k.replace('radio_','')}"]`).forEach(r=>{if(r.value===v)r.checked=true})});document.getElementById('dailyLogWrap').innerHTML='';logCounter=0;const logs=Array.isArray(data._logs)?data._logs:[];if(logs.length)logs.forEach(log=>buildLogCard(log));window._lastSuggested=data._lastSuggested||[];window._lastSuggestedChild=data._lastSuggestedChild||'';refreshSuggestChildDropdown(gv('suggestChild'));checkFinalDecision()}catch(e){}}refreshSuggestChildDropdown();refreshUnlockState()}
+document.addEventListener('DOMContentLoaded',init)
+</script>
+</body>
+</html>
